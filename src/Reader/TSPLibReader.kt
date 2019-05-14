@@ -2,6 +2,7 @@ package Reader
 
 import Models.Node
 import java.io.File
+import java.lang.Exception
 
 class TSPLibReader : IReader {
 
@@ -23,7 +24,7 @@ class TSPLibReader : IReader {
             else
                 index++
         }
-        return -1
+        throw Exception()
     }
 
     fun readNode(node: String): Node{
