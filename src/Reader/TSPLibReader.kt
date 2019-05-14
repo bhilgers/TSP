@@ -7,7 +7,7 @@ class TSPLibReader : IReader {
 
     override fun readFile(file: String): List<Node> {
         val lines = File(file).readLines().toMutableList()
-        var nodes: List<Node> = ArrayList()
+        var nodes: List<Node> = listOf()
         var index = findNodeSection(lines)+1
 
         while(lines[index] != "EOF")
