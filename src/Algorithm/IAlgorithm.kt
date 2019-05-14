@@ -1,0 +1,4 @@
+package Algorithm
+
+interface IAlgorithm {
+}

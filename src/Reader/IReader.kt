@@ -1,0 +1,4 @@
+package Reader
+
+interface IReader {
+}
