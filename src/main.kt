@@ -1,3 +1,5 @@
+import Reader.*
+
 fun main(args: Array <String>){
     //Create IReader()
     //Create IAlgorithm()
