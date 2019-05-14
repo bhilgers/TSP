@@ -1,0 +1,4 @@
+package Frame
+
+class MainFrame {
+}
