@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent
 import javax.swing.*
 
 
+
 class Frame (title: String): JFrame() {
 
 
@@ -15,11 +16,7 @@ class Frame (title: String): JFrame() {
     private fun createUI(title: String){
 
         setTitle(title)
-
-
         createMenuBar()
-
-
         defaultCloseOperation = JFrame.EXIT_ON_CLOSE
         setSize(400, 300)
         setLocationRelativeTo(null)
