@@ -23,7 +23,7 @@ class TSPLibReaderRec : IReader {
      */
 
     tailrec fun readLines(lines: List<String>): List<Node> = when(lines.head) {
-        "NODE_COORD_SECTION" -> readNodesFromSection(lines.tail, ArrayList<Node>())
+        "NODE_COORD_SECTION" -> readNodesFromSection(lines.tail, listOf())
         else -> readLines(lines.tail)
     }
 

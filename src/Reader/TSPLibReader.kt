@@ -2,12 +2,13 @@ package Reader
 
 import Models.Node
 import java.io.File
+import java.lang.Exception
 
 class TSPLibReader : IReader {
 
     override fun readFile(file: String): List<Node> {
         val lines = File(file).readLines().toMutableList()
-        var nodes: List<Node> = ArrayList()
+        var nodes: List<Node> = listOf()
         var index = findNodeSection(lines)+1
 
         while(lines[index] != "EOF")
@@ -23,7 +24,7 @@ class TSPLibReader : IReader {
             else
                 index++
         }
-        return -1
+        throw Exception()
     }
 
     fun readNode(node: String): Node{
