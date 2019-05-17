@@ -10,6 +10,18 @@ class TSPLibReaderRec : IReader {
         return readLines(lines)
     }
 
+
+    /**
+     *
+    fun anyRec (list: List<Product>, predicate: (Product)-> Boolean) : Boolean {
+        if (list.isEmpty()) return false
+        if (predicate(list.head)) return true
+        return anyRec(list.tail, predicate)
+    }
+    Es gibt keine ArrayList in Kotlin
+    Erste abfrage sollte immer sein, ob Liste leer ist
+     */
+
     tailrec fun readLines(lines: List<String>): List<Node> = when(lines.head) {
         "NODE_COORD_SECTION" -> readNodesFromSection(lines.tail, ArrayList<Node>())
         else -> readLines(lines.tail)
