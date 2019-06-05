@@ -1,4 +1,6 @@
 package Frame
+import Reader.*
+import Algorithm.*
 
 import java.awt.event.ActionEvent
 import java.awt.event.ActionListener
@@ -24,8 +26,6 @@ class Frame (title: String): JFrame() {
         setSize(400, 300)
         setLocationRelativeTo(null)
 
-
-
     }
 
 
@@ -44,11 +44,6 @@ class Frame (title: String): JFrame() {
         exit.mnemonic = KeyEvent.VK_E
         exit.toolTipText = "Exit application"
         exit.addActionListener { _: ActionEvent -> System.exit(0) }
-
-//        val upload = JMenuItem("Upload File")
-//        upload.mnemonic = KeyEvent.VK_U
-//        upload.toolTipText = "File Chooser"
-
 
 
         val choose = JButton("Choose")
@@ -70,8 +65,8 @@ class Frame (title: String): JFrame() {
 
 
         file.add(exit)
-        menubar.add(choose)
         menubar.add(file)
+        menubar.add(choose)
         menubar.add(start)
         menubar.add(stop)
 
@@ -85,11 +80,21 @@ class Frame (title: String): JFrame() {
         chooser.dialogTitle = "Wählen Sie aus"
         chooser.isAcceptAllFileFilterUsed
 
+        val reader : IReader = DummyReader()
+
+
         if(chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-             val save = chooser.selectedFile.name
-             println(save)
+             val file = chooser.selectedFile.path
+             val filename = chooser.selectedFile.name
+
+            reader.readFile(file)
+
+             println(file)
+
 
         }else {}
+
+
 
     }
 
