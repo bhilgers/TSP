@@ -1,6 +1,5 @@
-import Algorithm.DummyAlgo
-import Algorithm.IAlgorithm
 import Algorithm.NearestNeighbourAlgorithm
+import Algorithm.IAlgorithm
 import Reader.*
 import Frame.*
 import java.awt.EventQueue
