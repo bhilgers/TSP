@@ -1,12 +1,13 @@
 package Reader
 
+import Models.DataSet
 import Models.Node
 import java.io.File
 import java.lang.Exception
 
-class TSPLibReader : IReader {
+class TSPLibReaderSync : IReader {
 
-    override fun readFile(file: String): List<Node> {
+    override fun readFile(file: String): DataSet {
         val lines = File(file).readLines().toMutableList()
         var nodes: List<Node> = listOf()
         var index = findNodeSection(lines)+1
@@ -14,7 +15,7 @@ class TSPLibReader : IReader {
         while(lines[index] != "EOF")
             nodes += readNode(lines[index++])
 
-        return nodes
+        return DataSet(nodes, calcMatrix(nodes))
     }
     fun findNodeSection(list: List<String>): Int {
         var index = 0
@@ -32,6 +33,14 @@ class TSPLibReader : IReader {
         // Diese werden als leere Elemente in der Liste abgebildet und müssen entfernt werden.
         // Z.B. " 33  90 165"
         val values = node.split(" ").filter{e -> !e.isEmpty()}
-        return Node(values[0].toInt(),values[1].toInt(),values[2].toInt())
+        return Node(values[0].toInt(),values[1].toDouble(),values[2].toDouble())
+    }
+
+    fun calcMatrix(nodes: List<Node>): Array<IntArray>{
+        var matrix = Helper.initNewMatrix(nodes.size)
+
+        //calc each distance
+
+        return matrix;
     }
 }
