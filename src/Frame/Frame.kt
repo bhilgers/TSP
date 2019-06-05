@@ -1,12 +1,15 @@
 package Frame
 
 import java.awt.event.ActionEvent
+import java.awt.event.ActionListener
 import java.awt.event.KeyEvent
 import javax.swing.*
-
+import javax.swing.filechooser.FileNameExtensionFilter
 
 
 class Frame (title: String): JFrame() {
+
+
 
 
     init {
@@ -42,12 +45,18 @@ class Frame (title: String): JFrame() {
         exit.toolTipText = "Exit application"
         exit.addActionListener { _: ActionEvent -> System.exit(0) }
 
-        val upload = JMenuItem("Upload File")
-        upload.mnemonic = KeyEvent.VK_U
-        upload.toolTipText = "File Chooser"
+//        val upload = JMenuItem("Upload File")
+//        upload.mnemonic = KeyEvent.VK_U
+//        upload.toolTipText = "File Chooser"
 
 
-        
+
+        val choose = JButton("Choose")
+        choose.toolTipText = "Upload TXT"
+
+        choose.addActionListener{ e :ActionEvent -> selectfile()}
+        pack()
+
 
 
         val start = JButton("Create")
@@ -59,14 +68,29 @@ class Frame (title: String): JFrame() {
 
 
 
-        file.add(upload)
+
         file.add(exit)
+        menubar.add(choose)
         menubar.add(file)
         menubar.add(start)
         menubar.add(stop)
 
 
         jMenuBar = menubar
+    }
+
+    fun selectfile() {
+
+        val chooser = JFileChooser()
+        chooser.dialogTitle = "Wählen Sie aus"
+        chooser.isAcceptAllFileFilterUsed
+
+        if(chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
+             val save = chooser.selectedFile.name
+             println(save)
+
+        }else {}
+
     }
 
 }
