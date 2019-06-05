@@ -1,5 +1,6 @@
 import Algorithm.DummyAlgo
 import Algorithm.IAlgorithm
+import Algorithm.NearestNeighbourAlgorithm
 import Reader.*
 import Frame.*
 import java.awt.EventQueue
@@ -15,10 +16,11 @@ fun main(args: Array <String>){
     //Create IReader()
     val reader: IReader = TSPLibReaderSync()
     //Create IAlgorithm()
-    val algo: IAlgorithm = DummyAlgo()
+    val algo: IAlgorithm = NearestNeighbourAlgorithm()
     //Create MainFrame(IReader, IAlgorithm)
 
     var testdata = reader.readFile("C:\\Users\\BenHi\\Source\\test.txt")
+    var testresult = algo.Calculate(testdata)
 
     EventQueue.invokeLater(::show)
 
