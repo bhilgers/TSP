@@ -18,6 +18,8 @@ fun main(args: Array <String>){
     val algo: IAlgorithm = DummyAlgo()
     //Create MainFrame(IReader, IAlgorithm)
 
+    var test = reader.readFile("")
+
     EventQueue.invokeLater(::show)
 
 }

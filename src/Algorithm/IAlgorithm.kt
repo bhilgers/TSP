@@ -4,6 +4,6 @@ import Models.*
 
 interface IAlgorithm {
 
-    fun Calculate(nodes:List<Node>) : Graphe
+    fun Calculate(dataSet: DataSet) : List<Vector>
 
 }
