@@ -9,12 +9,10 @@ fun main(args: Array <String>){
     val reader: IReader = TSPLibReaderSync()
     //Create IAlgorithm()
     val algo: IAlgorithm = NearestNeighbourAlgorithm()
+    //test
+    //var testdata = reader.readFile("C:\\Users\\BenHi\\Source\\test.txt")
+    //var testresult = algo.Calculate(testdata)
     //Create MainFrame(IReader, IAlgorithm)
-
-    var testdata = reader.readFile("C:\\Users\\BenHi\\Source\\test.txt")
-    var testresult = algo.Calculate(testdata)
-
     val frame = Frame("Simple", reader, algo)
     frame.isVisible = true
-
 }

@@ -1,6 +1,8 @@
 package Frame
 import Reader.*
 import Algorithm.*
+import Models.DataSet
+import Models.Vector
 
 import java.awt.event.ActionEvent
 import java.awt.event.ActionListener
@@ -13,6 +15,7 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
 
     val reader: IReader = readerParm
     val algorithm: IAlgorithm = algorithmParm
+    var dataSet: DataSet? = null
 
     init {
         createUI(title)
@@ -48,21 +51,16 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
 
         val choose = JButton("Choose")
         choose.toolTipText = "Upload TXT"
-
         choose.addActionListener{ e :ActionEvent -> selectfile()}
         pack()
 
-
-
         val start = JButton("Create")
         start.toolTipText = "Start to Create TSP"
+        start.addActionListener{ e :ActionEvent -> calculate()}
 
         val stop = JButton("Stop")
         stop.toolTipText= "Stop TSP"
         stop.setLocation(300, 20)
-
-
-
 
         file.add(exit)
         menubar.add(file)
@@ -70,32 +68,33 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
         menubar.add(start)
         menubar.add(stop)
 
-
         jMenuBar = menubar
     }
 
     fun selectfile() {
-
         val chooser = JFileChooser()
         chooser.dialogTitle = "Wählen Sie aus"
         chooser.isAcceptAllFileFilterUsed
 
-
         if(chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-             val file = chooser.selectedFile.path
-             val filename = chooser.selectedFile.name
-
-            reader.readFile(file)
-
-             println(file)
-
-
-        }else {}
-
-
-
+            val file = chooser.selectedFile.path
+            this.dataSet = reader.readFile(file)
+        }
     }
 
+    fun calculate(){
+        if(this.dataSet != null){
+            val result = this.algorithm.Calculate(this.dataSet!!)
+            draw(result)
+        }
+        else{
+            System.out.println("Error: Cant calculate an empty dataSet")
+        }
+    }
+
+    fun draw(vectors: List<Vector>){
+        System.out.println("Info: caluclated")
+    }
 }
 
 
