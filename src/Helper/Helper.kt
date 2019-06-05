@@ -4,11 +4,11 @@ import Models.*
 import kotlin.math.pow
 import kotlin.math.sqrt
 
-fun initNewMatrix(count: Int): Array<IntArray> {
-    var matrix: Array<IntArray> = Array(count) { IntArray(count) }
+fun initNewMatrix(count: Int): Array<DoubleArray> {
+    var matrix: Array<DoubleArray> = Array(count) { DoubleArray(count) }
 
     for (i in 0..count-1) {
-        matrix[i][i] = 0;
+        matrix[i][i] = 0.0;
     }
 
     return matrix
