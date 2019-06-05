@@ -1,4 +1,4 @@
-import Algorithm.DummyAlgo
+import Algorithm.NearestNeighbourAlgorithm
 import Algorithm.IAlgorithm
 import Reader.*
 import Frame.*
@@ -13,12 +13,13 @@ private fun show() {
 
 fun main(args: Array <String>){
     //Create IReader()
-    val reader: IReader = DummyReader()
+    val reader: IReader = TSPLibReaderSync()
     //Create IAlgorithm()
-    val algo: IAlgorithm = DummyAlgo()
+    val algo: IAlgorithm = NearestNeighbourAlgorithm()
     //Create MainFrame(IReader, IAlgorithm)
 
-    var test = reader.readFile("")
+    var testdata = reader.readFile("C:\\Users\\BenHi\\Source\\test.txt")
+    var testresult = algo.Calculate(testdata)
 
     EventQueue.invokeLater(::show)
 
