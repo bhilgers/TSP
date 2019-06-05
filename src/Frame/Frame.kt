@@ -9,10 +9,10 @@ import javax.swing.*
 import javax.swing.filechooser.FileNameExtensionFilter
 
 
-class Frame (title: String): JFrame() {
+class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JFrame() {
 
-
-
+    val reader: IReader = readerParm
+    val algorithm: IAlgorithm = algorithmParm
 
     init {
         createUI(title)
@@ -79,8 +79,6 @@ class Frame (title: String): JFrame() {
         val chooser = JFileChooser()
         chooser.dialogTitle = "Wählen Sie aus"
         chooser.isAcceptAllFileFilterUsed
-
-        val reader : IReader = DummyReader()
 
 
         if(chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){

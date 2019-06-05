@@ -2,13 +2,6 @@ import Algorithm.NearestNeighbourAlgorithm
 import Algorithm.IAlgorithm
 import Reader.*
 import Frame.*
-import java.awt.EventQueue
-
-private fun show() {
-
-    val frame = Frame("Simple")
-    frame.isVisible = true
-}
 
 
 fun main(args: Array <String>){
@@ -21,6 +14,7 @@ fun main(args: Array <String>){
     var testdata = reader.readFile("C:\\Users\\BenHi\\Source\\test.txt")
     var testresult = algo.Calculate(testdata)
 
-    EventQueue.invokeLater(::show)
+    val frame = Frame("Simple", reader, algo)
+    frame.isVisible = true
 
 }
