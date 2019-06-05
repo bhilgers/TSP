@@ -36,10 +36,16 @@ class TSPLibReaderSync : IReader {
         return Node(values[0].toInt(),values[1].toDouble(),values[2].toDouble())
     }
 
-    fun calcMatrix(nodes: List<Node>): Array<IntArray>{
+    fun calcMatrix(nodes: List<Node>): Array<DoubleArray>{
         var matrix = Helper.initNewMatrix(nodes.size)
 
-        //calc each distance
+        for (i in 0..nodes.size-2){
+            for (j in i+1..nodes.size-1){
+                val dis = Helper.getDistance(nodes[i], nodes[j])
+                matrix[nodes[i].number-1][nodes[j].number-1] = dis
+                matrix[nodes[j].number-1][nodes[i].number-1] = dis
+            }
+        }
 
         return matrix;
     }

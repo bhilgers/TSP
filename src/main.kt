@@ -13,12 +13,12 @@ private fun show() {
 
 fun main(args: Array <String>){
     //Create IReader()
-    val reader: IReader = DummyReader()
+    val reader: IReader = TSPLibReaderSync()
     //Create IAlgorithm()
     val algo: IAlgorithm = DummyAlgo()
     //Create MainFrame(IReader, IAlgorithm)
 
-    var test = reader.readFile("")
+    var testdata = reader.readFile("C:\\Users\\BenHi\\Source\\test.txt")
 
     EventQueue.invokeLater(::show)
 
