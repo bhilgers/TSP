@@ -1,5 +1,3 @@
-import Algorithm.DummyAlgo
-import Algorithm.IAlgorithm
 import Reader.*
 import Frame.*
 import java.awt.EventQueue
@@ -13,10 +11,14 @@ private fun show() {
 
 fun main(args: Array <String>){
     //Create IReader()
-    val reader: IReader = DummyReader()
     //Create IAlgorithm()
-    val algo: IAlgorithm = DummyAlgo()
     //Create MainFrame(IReader, IAlgorithm)
+
+    val reader: IReader = TSPLibReaderRec()
+    val list = reader.readFile("C:\\Users\\BenHi\\Source\\Mathe 2\\tes.txt")
+    list.forEach{
+        println("Node: " + it.number)
+    }
 
     EventQueue.invokeLater(::show)
 

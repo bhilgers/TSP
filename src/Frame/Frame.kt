@@ -47,12 +47,16 @@ class Frame (title: String): JFrame() {
         upload.toolTipText = "File Chooser"
 
 
+        
+
+
         val start = JButton("Create")
         start.toolTipText = "Start to Create TSP"
 
         val stop = JButton("Stop")
         stop.toolTipText= "Stop TSP"
         stop.setLocation(300, 20)
+
 
 
         file.add(upload)
