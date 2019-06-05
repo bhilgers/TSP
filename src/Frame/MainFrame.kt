@@ -1,4 +1,0 @@
-package Frame
-
-class MainFrame {
-}
