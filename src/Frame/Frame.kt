@@ -3,21 +3,19 @@ import Reader.*
 import Algorithm.*
 import Models.DataSet
 import Models.Vector
-import java.awt.Color
-import java.awt.Component
-import java.awt.Graphics
-import java.awt.Graphics2D
+import java.awt.*
 import java.awt.event.*
 
 import javax.swing.*
 import javax.swing.filechooser.FileNameExtensionFilter
 import java.awt.Toolkit.getDefaultToolkit
-import java.awt.Dimension
-
-
 
 
 class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JFrame() {
+
+    /**
+     * Globale Variablen
+     */
 
     val reader: IReader = readerParm
     val algorithm: IAlgorithm = algorithmParm
@@ -33,13 +31,14 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
     private fun createUI(title: String){
 
         setTitle(title)
-        add(canvas)
+
         createMenuBar()
         defaultCloseOperation = EXIT_ON_CLOSE
         setSize(1000, 1000)
-        canvas.setSize(500, 500)
+
         setLocationRelativeTo(null)
 
+        canvas.setSize(500, 500)
 
     }
 
@@ -72,7 +71,7 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
 
         val stop = JButton("Stop")
         stop.toolTipText= "Stop TSP"
-        stop.setLocation(300, 20)
+
 
         file.add(exit)
         menubar.add(file)
@@ -80,8 +79,8 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
         menubar.add(start)
         menubar.add(stop)
 
+        add(canvas)
         jMenuBar = menubar
-
         canvas.isVisible = true
 
     }
@@ -110,15 +109,22 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
 
 
     fun draw(vectors: List<Vector>,g: Graphics2D){
-
         g.color = Color.red
         vectors.forEach{
             val start=it.fromNode
             val end=it.toNode
-            g.drawLine(start.x.toInt(),start.y.toInt(),end.x.toInt(),end.y.toInt())
 
+
+            /**
+             * Draw Lines
+             */
+            //g.drawLine(start.x.toInt()*5,start.y.toInt()*5,end.x.toInt()*5,end.y.toInt()*5)
+
+            /**
+             * Draw Points
+             */
+            g.drawLine(start.x.toInt()*5,start.y.toInt()*5,start.x.toInt()*5,start.y.toInt()*5)
         }
-
         System.out.println("Info: caluclated")
     }
 
