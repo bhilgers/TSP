@@ -3,12 +3,18 @@ import Reader.*
 import Algorithm.*
 import Models.DataSet
 import Models.Vector
+import java.awt.Color
+import java.awt.Component
+import java.awt.Graphics
+import java.awt.Graphics2D
+import java.awt.event.*
 
-import java.awt.event.ActionEvent
-import java.awt.event.ActionListener
-import java.awt.event.KeyEvent
 import javax.swing.*
 import javax.swing.filechooser.FileNameExtensionFilter
+import java.awt.Toolkit.getDefaultToolkit
+import java.awt.Dimension
+
+
 
 
 class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JFrame() {
@@ -16,6 +22,9 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
     val reader: IReader = readerParm
     val algorithm: IAlgorithm = algorithmParm
     var dataSet: DataSet? = null
+    var result=listOf<Vector>()
+
+    val canvas = java.awt.Canvas()
 
     init {
         createUI(title)
@@ -24,10 +33,13 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
     private fun createUI(title: String){
 
         setTitle(title)
+        add(canvas)
         createMenuBar()
-        defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-        setSize(400, 300)
+        defaultCloseOperation = EXIT_ON_CLOSE
+        setSize(1000, 1000)
+        canvas.setSize(500, 500)
         setLocationRelativeTo(null)
+
 
     }
 
@@ -36,7 +48,7 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
 
         val menubar = JMenuBar()
 
-        val file = JMenu("Menue")
+        val file = JMenu("Menu")
         file.mnemonic = KeyEvent.VK_F
 
 
@@ -69,6 +81,9 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
         menubar.add(stop)
 
         jMenuBar = menubar
+
+        canvas.isVisible = true
+
     }
 
     fun selectfile() {
@@ -77,24 +92,41 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
         chooser.isAcceptAllFileFilterUsed
 
         if(chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-            val file = chooser.selectedFile.path
-            this.dataSet = reader.readFile(file)
+            println(chooser.selectedFile.path)
+            this.dataSet = reader.readFile(chooser.selectedFile.path)
         }
     }
 
     fun calculate(){
         if(this.dataSet != null){
-            val result = this.algorithm.Calculate(this.dataSet!!)
-            draw(result)
+            result = this.algorithm.Calculate(this.dataSet!!)
         }
         else{
             System.out.println("Error: Cant calculate an empty dataSet")
         }
+        repaint()
     }
 
-    fun draw(vectors: List<Vector>){
+
+
+    fun draw(vectors: List<Vector>,g: Graphics2D){
+
+        g.color = Color.red
+        vectors.forEach{
+            val start=it.fromNode
+            val end=it.toNode
+            g.drawLine(start.x.toInt(),start.y.toInt(),end.x.toInt(),end.y.toInt())
+
+        }
+
         System.out.println("Info: caluclated")
     }
+
+    override fun paint(g: Graphics?) {
+        super.paint(g)
+        draw(result,canvas.graphics as Graphics2D)
+    }
+
 }
 
 
