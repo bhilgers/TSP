@@ -115,12 +115,12 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
             /**
              * Draw Lines
              */
-            //g.drawLine(start.x.toInt()*5,start.y.toInt()*5,end.x.toInt()*5,end.y.toInt()*5)
+            g.drawLine(start.x.toInt()*5,start.y.toInt()*5,end.x.toInt()*5,end.y.toInt()*5)
 
             /**
              * Draw Points
              */
-            g.drawLine(start.x.toInt()*5,start.y.toInt()*5,start.x.toInt()*5,start.y.toInt()*5)
+           // g.drawLine(start.x.toInt()*5,start.y.toInt()*5,start.x.toInt()*5,start.y.toInt()*5)
         }
         System.out.println("Info: repainted")
     }
