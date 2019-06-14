@@ -19,5 +19,5 @@ fun initNewMatrix(count: Int): Array<DoubleArray> {
 }
 
 fun getDistance(node1: Node, node2: Node): Double{
-    return sqrt((node1.x-node2.y).pow(2)+ (node1.y-node2.y).pow(2))
+    return sqrt((node1.x-node2.x).pow(2)+ (node1.y-node2.y).pow(2))
 }

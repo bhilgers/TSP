@@ -91,6 +91,7 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
             this.dataSet = reader.readFile(chooser.selectedFile.path)
             System.out.println("Info: finished reading")
         }
+        repaint()
     }
 
     fun calculate(){
@@ -104,31 +105,20 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
         repaint()
     }
 
-
-
-    fun draw(vectors: List<Vector>,g: Graphics2D){
+    fun draw(g: Graphics2D){
         g.color = Color.red
-        vectors.forEach{
-            val start=it.fromNode
-            val end=it.toNode
-
-
-            /**
-             * Draw Lines
-             */
-            //g.drawLine(start.x.toInt()*5,start.y.toInt()*5,end.x.toInt()*5,end.y.toInt()*5)
-
-            /**
-             * Draw Points
-             */
-            g.drawLine(start.x.toInt()*5,start.y.toInt()*5,start.x.toInt()*5,start.y.toInt()*5)
+        result.forEach{
+            g.drawLine(it.fromNode.x.toInt()*5,it.fromNode.y.toInt()*5,it.toNode.x.toInt()*5,it.toNode.y.toInt()*5)
+        }
+        dataSet?.nodes?.forEach {
+            g.drawOval(it.x.toInt()*5,it.y.toInt()*5,2,2)
         }
         System.out.println("Info: repainted")
     }
 
     override fun paint(g: Graphics?) {
         super.paint(g)
-        draw(result,canvas.graphics as Graphics2D)
+        draw(canvas.graphics as Graphics2D)
     }
 
 }

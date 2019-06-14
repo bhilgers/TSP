@@ -1,5 +1,4 @@
-import Algorithm.NearestNeighbourAlgorithm
-import Algorithm.IAlgorithm
+import Algorithm.*
 import Reader.*
 import Frame.*
 
