@@ -69,15 +69,11 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
         start.toolTipText = "Start to Create TSP"
         start.addActionListener{ e :ActionEvent -> calculate()}
 
-        val stop = JButton("Stop")
-        stop.toolTipText= "Stop TSP"
-
 
         file.add(exit)
         menubar.add(file)
         menubar.add(choose)
         menubar.add(start)
-        menubar.add(stop)
 
         add(canvas)
         jMenuBar = menubar
@@ -93,6 +89,7 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
         if(chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
             println(chooser.selectedFile.path)
             this.dataSet = reader.readFile(chooser.selectedFile.path)
+            System.out.println("Info: finished reading")
         }
     }
 
@@ -125,7 +122,7 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
              */
             g.drawLine(start.x.toInt()*5,start.y.toInt()*5,start.x.toInt()*5,start.y.toInt()*5)
         }
-        System.out.println("Info: caluclated")
+        System.out.println("Info: repainted")
     }
 
     override fun paint(g: Graphics?) {

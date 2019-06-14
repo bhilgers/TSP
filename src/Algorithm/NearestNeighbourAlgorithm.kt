@@ -28,9 +28,9 @@ class NearestNeighbourAlgorithm: IAlgorithm {
     private fun findNearestNeighbour(fromNode: Node, nodes: List<Node>, matrix: Array<DoubleArray>): Node{
         var nearestNode = nodes[0]
         if(nodes.size>1){
-            var nearestDistance = matrix[fromNode.number-1][nearestNode.number-1]
+            var nearestDistance = matrix[nearestNode.number-1][fromNode.number-1]
             nodes.drop(1).forEach{
-                val newDistance = matrix[fromNode.number-1][it.number-1]
+                val newDistance = matrix[it.number-1][fromNode.number-1]
                 if(newDistance < nearestDistance){
                     nearestDistance = newDistance
                     nearestNode= it

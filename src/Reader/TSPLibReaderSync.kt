@@ -29,9 +29,7 @@ class TSPLibReaderSync : IReader {
     }
 
     fun readNode(node: String): Node{
-        // In einigen listen werden für die Einrückung Leerzeichen verwendet.
-        // Diese werden als leere Elemente in der Liste abgebildet und müssen entfernt werden.
-        // Z.B. " 33  90 165"
+        //filter all all empty values (spaces)!
         val values = node.split(" ").filter{e -> !e.isEmpty()}
         return Node(values[0].toInt(),values[1].toDouble(),values[2].toDouble())
     }
@@ -39,6 +37,7 @@ class TSPLibReaderSync : IReader {
     fun calcMatrix(nodes: List<Node>): Array<DoubleArray>{
         var matrix = Helper.initNewMatrix(nodes.size)
 
+        //calc distance for every Node
         for (i in 0..nodes.size-2){
             for (j in i+1..nodes.size-1){
                 val dis = Helper.getDistance(nodes[i], nodes[j])

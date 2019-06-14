@@ -4,6 +4,10 @@ import Models.*
 import kotlin.math.pow
 import kotlin.math.sqrt
 
+fun newMatrix(count: Int): Array<DoubleArray> {
+    return Array(count){ DoubleArray(count) }
+}
+
 fun initNewMatrix(count: Int): Array<DoubleArray> {
     var matrix: Array<DoubleArray> = Array(count) { DoubleArray(count) }
 
