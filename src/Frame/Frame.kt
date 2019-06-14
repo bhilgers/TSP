@@ -96,6 +96,7 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
     fun calculate(){
         if(this.dataSet != null){
             result = this.algorithm.Calculate(this.dataSet!!)
+            System.out.println("Info: calculated")
         }
         else{
             System.out.println("Error: Cant calculate an empty dataSet")

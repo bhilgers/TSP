@@ -11,7 +11,6 @@ class DummyReader : IReader {
         nodes += Node(1,43.0,76.0)
         nodes += Node(2,51.0,28.0)
 
-
         return DataSet(nodes, Helper.initNewMatrix(1))
     }
 }
