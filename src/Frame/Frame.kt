@@ -22,10 +22,8 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
     var dataSet: DataSet? = null
     var result=listOf<Vector>()
     val canvas = java.awt.Canvas()
-
     val setHigh = 500
     val setWidth = 500
-
 
     init {
         createUI(title)
@@ -38,11 +36,8 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
         createMenuBar()
 
         setSize(1000, 1000)
-
         setLocationRelativeTo(null)
-
         canvas.setSize(setWidth, setHigh)
-
     }
 
 
@@ -50,7 +45,7 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
 
         val menubar = JMenuBar()
 
-        val file = JMenu("Menu")
+        val file = JMenu("Art")
         file.mnemonic = KeyEvent.VK_F
 
         /**
@@ -59,13 +54,27 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
         val synch = JMenuItem("Synchron")
         synch.mnemonic = KeyEvent.VK_E
         synch.toolTipText = "Synchrones TSP"
-        synch.addActionListener { _e: ActionEvent -> NearestNeighbor() }
+        synch.addActionListener { _e: ActionEvent -> selectFile() }
+
+        val asynch = JMenuItem("Asynchron")
+        asynch.mnemonic = KeyEvent.VK_E
+        asynch.toolTipText = "Synchrones TSP"
+//        asynch.addActionListener { _e: ActionEvent -> selectFile() }
 
 
-        val tree = JMenuItem("Choose")
+        val algo = JMenu("Algorithmus")
+        file.mnemonic = KeyEvent.VK_F
+
+        val nearest = JMenuItem("NearestNeighbor")
+        nearest.mnemonic = KeyEvent.VK_E
+        nearest.toolTipText = "Synchrones TSP"
+//        nearest.addActionListener { _e: ActionEvent -> selectFile() }
+
+        val tree = JMenuItem("Tree")
         tree.mnemonic = KeyEvent.VK_E
-        tree.toolTipText = "Upload TXT"
-        //tree.addActionListener{ e :ActionEvent -> MinimumSpanning()}
+        tree.toolTipText = "Synchrones TSP"
+//        tree.addActionListener { _e: ActionEvent -> selectFile() }
+
 
 
         val start = JButton("Lines")
@@ -74,7 +83,12 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
 
 
         file.add(synch)
-        file.add(tree)
+        file.add(asynch)
+
+        algo.add(tree)
+        algo.add(nearest)
+
+        menubar.add(algo)
         menubar.add(file)
         menubar.add(start)
 
@@ -84,7 +98,8 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
 
     }
 
-    fun NearestNeighbor() {
+    fun selectFile() {
+
         val chooser = JFileChooser()
         chooser.dialogTitle = "Wählen Sie aus"
         chooser.isAcceptAllFileFilterUsed
@@ -98,19 +113,6 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
 
     }
 
-//    fun MinimumSpanning() {
-//        val chooser = JFileChooser()
-//        chooser.dialogTitle = "Wählen Sie aus"
-//        chooser.isAcceptAllFileFilterUsed
-//
-//        if(chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-//            println(chooser.selectedFile.path)
-//            this.dataSet = reader.readFile(chooser.selectedFile.path)
-//            System.out.println("Info: finished reading")
-////        repaint()
-//        }
-//
-//    }
 
     fun calculate(){
         if(this.dataSet != null){
