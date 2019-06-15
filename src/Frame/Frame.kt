@@ -22,8 +22,10 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
     var dataSet: DataSet? = null
     var result=listOf<Vector>()
     val canvas = java.awt.Canvas()
-    val setHigh = 500
-    val setWidth = 500
+    val setWith = 0.0
+    val setHigh = 0.0
+
+
 
     init {
         createUI(title)
@@ -37,7 +39,8 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
 
         setSize(1000, 1000)
         setLocationRelativeTo(null)
-        canvas.setSize(setWidth, setHigh)
+        canvas.setSize(500,500)
+
     }
 
 
@@ -45,8 +48,16 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
 
         val menubar = JMenuBar()
 
+        /**
+         * Dropdowns
+         */
         val file = JMenu("Art")
         file.mnemonic = KeyEvent.VK_F
+
+        val algo = JMenu("Algorithmus")
+        file.mnemonic = KeyEvent.VK_F
+
+
 
         /**
          * Menue Items
@@ -60,10 +71,6 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
         asynch.mnemonic = KeyEvent.VK_E
         asynch.toolTipText = "Synchrones TSP"
 //        asynch.addActionListener { _e: ActionEvent -> selectFile() }
-
-
-        val algo = JMenu("Algorithmus")
-        file.mnemonic = KeyEvent.VK_F
 
         val nearest = JMenuItem("NearestNeighbor")
         nearest.mnemonic = KeyEvent.VK_E
@@ -111,8 +118,15 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
 //        repaint()
         }
 
-    }
+        val setHigh =  dataSet!!.nodes.maxBy { it.x }
+        val setWith =  dataSet!!.nodes.maxBy { it.y }
 
+        println(setHigh!!.x)
+        println(setWith!!.y)
+
+
+
+    }
 
     fun calculate(){
         if(this.dataSet != null){
@@ -123,6 +137,8 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
             System.out.println("Error: Cant calculate an empty dataSet")
         }
         repaint()
+
+
     }
 
     fun draw(g: Graphics2D){
