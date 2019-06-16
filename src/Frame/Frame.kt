@@ -171,7 +171,10 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
         clear()
         result.forEach {
             val text = "Vector ( From: " + it.fromNode.number + ", To: "+ it.toNode.number + " )"
-            //draw text
+//            val text2 : String = "{${it.fromNode.number} ${it.toNode.number}}"
+
+            g.color = Color.black
+            g.drawString("Text", 20 , 80)
         }
     }
     fun clear(){
@@ -184,6 +187,7 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
         else
             drawText(canvas.graphics as Graphics2D)
     }
+
 
 }
 

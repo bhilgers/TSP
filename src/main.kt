@@ -11,4 +11,5 @@ fun main(args: Array <String>){
 
     val frame = Frame("Simple", reader, algo)
     frame.isVisible = true
+
 }
