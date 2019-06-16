@@ -5,7 +5,7 @@ import Frame.*
 
 fun main(args: Array <String>){
     //Create IReader()
-    val reader: IReader = TSPLibReaderSync()
+    val reader: IReader = TSPLibReaderSym()
     //Create IAlgorithm()
     val algo: IAlgorithm = NearestNeighbourAlgorithm()
 

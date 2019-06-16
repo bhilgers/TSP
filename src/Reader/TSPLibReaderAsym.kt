@@ -5,7 +5,7 @@ import Models.Node
 import java.io.File
 import java.lang.Exception
 
-class TSPLibReaderAsync : IReader {
+class TSPLibReaderAsym : IReader {
     override fun readFile(file: String): DataSet {
 
         val lines = File(file).readLines().toMutableList()

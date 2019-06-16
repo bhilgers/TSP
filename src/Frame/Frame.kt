@@ -7,8 +7,7 @@ import java.awt.*
 import java.awt.event.*
 
 import javax.swing.*
-import javax.swing.filechooser.FileNameExtensionFilter
-import java.awt.Toolkit.getDefaultToolkit
+import java.lang.Exception
 
 
 class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JFrame() {
@@ -26,7 +25,7 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
     var realtivHigh: Double = 0.0
     val canvasWith = 1000
     val canvasHigh = 900
-    var isAsync = false
+    var isAsym = false
 
 
 
@@ -60,15 +59,23 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
         synch.mnemonic = KeyEvent.VK_E
         synch.toolTipText = "Synchrones TSP"
         synch.addActionListener { _e: ActionEvent -> run {
-            this.reader = TSPLibReaderSync()
-            this.isAsync = false
+            this.reader = TSPLibReaderSym()
+            this.isAsym = false
+            //reset
+            this.result = listOf()
+            this.dataSet = null
+            repaint()
         }}
-        val asynch = JMenuItem("Asynchron")
+        val asynch = JMenuItem("Asymetrich")
         asynch.mnemonic = KeyEvent.VK_E
-        asynch.toolTipText = "Synchrones TSP"
+        asynch.toolTipText = "Symetrich TSP"
         asynch.addActionListener { _e: ActionEvent -> run {
-            this.reader = TSPLibReaderAsync()
-            this.isAsync = true
+            this.reader = TSPLibReaderAsym()
+            this.isAsym = true
+            //reset
+            this.result = listOf()
+            this.dataSet = null
+            repaint()
         } }
 
         val algo = JMenu("Algorithm")
@@ -76,11 +83,21 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
         val nearest = JMenuItem("NearestNeighbor")
         nearest.mnemonic = KeyEvent.VK_E
         nearest.toolTipText = "Synchrones TSP"
-        nearest.addActionListener { _e: ActionEvent -> this.algorithm = NearestNeighbourAlgorithm() }
+        nearest.addActionListener { _e: ActionEvent -> run {
+            this.algorithm = NearestNeighbourAlgorithm()
+            //reset result
+            this.result = listOf()
+            repaint()
+        } }
         val tree = JMenuItem("MinimunSpanningTree")
         tree.mnemonic = KeyEvent.VK_E
         tree.toolTipText = "Synchrones TSP"
-        tree.addActionListener { _e: ActionEvent -> this.algorithm = MinimumSpanningTreeAlgorithm()}
+        tree.addActionListener { _e: ActionEvent -> run {
+            this.algorithm = MinimumSpanningTreeAlgorithm()
+            //reset result
+            this.result = listOf()
+            repaint()
+        }}
 
         //buttons
         val chose = JButton("File")
@@ -110,17 +127,23 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
         chooser.isAcceptAllFileFilterUsed
 
         if(chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-            println(chooser.selectedFile.path)
-            this.dataSet = reader.readFile(chooser.selectedFile.path)
-            System.out.println("Info: finished reading")
+            try {
+                println(chooser.selectedFile.path)
+                this.dataSet = reader.readFile(chooser.selectedFile.path)
+                System.out.println("Info: finished reading")
 
-            //get relativs
-            val highstX =  dataSet!!.nodes.maxBy { it.x }!!.x
-            val highstY =  dataSet!!.nodes.maxBy { it.y }!!.y
-            this.realtivHigh = canvasHigh/highstY
-            this.relativWith = canvasWith/highstX
+                //get relativs
+                val highstX =  dataSet!!.nodes.maxBy { it.x }!!.x
+                val highstY =  dataSet!!.nodes.maxBy { it.y }!!.y
+                this.realtivHigh = canvasHigh/highstY
+                this.relativWith = canvasWith/highstX
 
-            repaint()
+                //reset result
+                this.result = listOf()
+                repaint()
+            } catch (e : Exception) {
+                System.out.println("Error: Can't read File! Check you use the right reader")
+            }
         }
     }
 
@@ -133,7 +156,7 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
             System.out.println("Info: total distance = "+distance)
         }
         else{
-            System.out.println("Error: Cant calculate an empty dataSet")
+            System.out.println("Error: Can't calculate an empty dataSet")
         }
         repaint()
     }
@@ -169,12 +192,24 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
     }
     fun drawText(g: Graphics2D) {
         clear()
+        g.color = Color.black
+        var textPosition = 20
+
+        //print nodes
+        if(dataSet != null) {
+            g.drawString("Nodes: " + dataSet!!.nodes.size, 20 , textPosition)
+            //set high for next text line
+            textPosition += 30
+        }
+
+        //print vectors
         result.forEach {
             val text = "Vector ( From: " + it.fromNode.number + ", To: "+ it.toNode.number + " )"
-//            val text2 : String = "{${it.fromNode.number} ${it.toNode.number}}"
-
-            g.color = Color.black
-            g.drawString("Text", 20 , 80)
+            g.drawString(text, 20 , textPosition)
+            //set high for next text line
+            textPosition += 15
+            if(textPosition > canvasHigh)
+                System.out.println("Info: can't draw all vectors")
         }
     }
     fun clear(){
@@ -182,7 +217,7 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
     }
     override fun paint(g: Graphics?) {
         super.paint(g)
-        if(!this.isAsync)
+        if(!this.isAsym)
             draw(canvas.graphics as Graphics2D)
         else
             drawText(canvas.graphics as Graphics2D)
