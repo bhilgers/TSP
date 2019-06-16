@@ -26,6 +26,7 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
     var realtivHigh: Double = 0.0
     val canvasWith = 1000
     val canvasHigh = 900
+    var isAsync = false
 
 
 
@@ -58,11 +59,17 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
         val synch = JMenuItem("Synchron")
         synch.mnemonic = KeyEvent.VK_E
         synch.toolTipText = "Synchrones TSP"
-        synch.addActionListener { _e: ActionEvent -> this.reader = TSPLibReaderSync()}
+        synch.addActionListener { _e: ActionEvent -> run {
+            this.reader = TSPLibReaderSync()
+            this.isAsync = false
+        }}
         val asynch = JMenuItem("Asynchron")
         asynch.mnemonic = KeyEvent.VK_E
         asynch.toolTipText = "Synchrones TSP"
-        asynch.addActionListener { _e: ActionEvent -> this.reader = TSPLibReaderAsync() }
+        asynch.addActionListener { _e: ActionEvent -> run {
+            this.reader = TSPLibReaderAsync()
+            this.isAsync = true
+        } }
 
         val algo = JMenu("Algorithm")
         file.mnemonic = KeyEvent.VK_F
@@ -73,7 +80,7 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
         val tree = JMenuItem("MinimunSpanningTree")
         tree.mnemonic = KeyEvent.VK_E
         tree.toolTipText = "Synchrones TSP"
-        tree.addActionListener { _e: ActionEvent -> this.algorithm = MinimumSpanningTreeAlgorithm() }
+        tree.addActionListener { _e: ActionEvent -> this.algorithm = MinimumSpanningTreeAlgorithm()}
 
         //buttons
         val chose = JButton("File")
@@ -84,11 +91,6 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
         start.toolTipText = "Start to Create TSP"
         start.addActionListener{ e :ActionEvent -> calculate()}
 
-        val clear = JButton("Clear")
-        clear.toolTipText = "Start to Create TSP"
-        clear.addActionListener{ e :ActionEvent -> clear()}
-
-
         //adding
         file.add(synch)
         file.add(asynch)
@@ -98,7 +100,6 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
         menubar.add(file)
         menubar.add(chose)
         menubar.add(start)
-        menubar.add(clear)
         jMenuBar = menubar
     }
 
@@ -128,10 +129,7 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
             result = this.algorithm.Calculate(this.dataSet!!)
             System.out.println("Info: calculated")
             //calculate total distance
-            var distance = 0.0
-            result.forEach {
-                distance += it.getDistance()
-            }
+            var distance = calculateTotalDistance()
             System.out.println("Info: total distance = "+distance)
         }
         else{
@@ -139,11 +137,25 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
         }
         repaint()
     }
+    fun calculateTotalDistance(): Double{
+        var distance = 0.0
+        result.forEach {
+            distance += dataSet!!.matrix[it.toNode.number-1][it.fromNode.number-1]
+        }
+        return distance
+    }
 
     fun draw(g: Graphics2D){
+        clear()
         g.color = Color.red
         result.forEach{
+            //comments are for showing that the node 107 is only visited once
+            /*
+            if(it.fromNode.number == 107 || it.toNode.number == 107) {
+                g.color = Color.BLACK
+            }*/
             g.drawLine(it.fromNode.x.toInt()*relativWith.toInt(),it.fromNode.y.toInt()*realtivHigh.toInt(),it.toNode.x.toInt()*relativWith.toInt(),it.toNode.y.toInt()*realtivHigh.toInt())
+            //g.color = Color.red
         }
         g.color = Color.blue
         dataSet?.nodes?.forEach {
@@ -155,12 +167,22 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
             g.drawOval(dataSet!!.nodes[0].x.toInt() * relativWith.toInt()-5, dataSet!!.nodes[0].y.toInt() * realtivHigh.toInt()-5, 10, 10)
         }
     }
+    fun drawText(g: Graphics2D) {
+        clear()
+        result.forEach {
+            val text = "Vector ( From: " + it.fromNode.number + ", To: "+ it.toNode.number + " )"
+            //draw text
+        }
+    }
     fun clear(){
         canvas.graphics.clearRect(0,0, canvas.width, canvas.height);
     }
     override fun paint(g: Graphics?) {
         super.paint(g)
-        draw(canvas.graphics as Graphics2D)
+        if(!this.isAsync)
+            draw(canvas.graphics as Graphics2D)
+        else
+            drawText(canvas.graphics as Graphics2D)
     }
 
 }

@@ -9,6 +9,8 @@ class MinimumSpanningTreeAlgorithm : IAlgorithm {
         val nodesLeft = dataSet.nodes.drop(1).toMutableList()
         // step 1: create mst and step 2: duplicate all vectors
         val minimumSpanningTree = createDuplicatedMinimunSpanningTree(startNode,nodesLeft,dataSet.matrix)
+        System.out.println("Info: calculated mst")
+        //step 3: find TSP tour
         val result = findTSPTour(minimumSpanningTree, listOf())
 
         return result
