@@ -121,6 +121,12 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
         if(this.dataSet != null){
             result = this.algorithm.Calculate(this.dataSet!!)
             System.out.println("Info: calculated")
+            //calculate total distance
+            var distance = 0.0
+            result.forEach {
+                distance += it.getDistance()
+            }
+            System.out.println("Info: total distance = "+distance)
         }
         else{
             System.out.println("Error: Cant calculate an empty dataSet")
