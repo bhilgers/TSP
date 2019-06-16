@@ -17,8 +17,8 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
      * Globale Variablen
      */
 
-    val reader: IReader = readerParm
-    val algorithm: IAlgorithm = algorithmParm
+    var reader: IReader = readerParm
+    var algorithm: IAlgorithm = algorithmParm
     var dataSet: DataSet? = null
     var result=listOf<Vector>()
     val canvas = java.awt.Canvas()
@@ -65,22 +65,22 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
         val synch = JMenuItem("Synchron")
         synch.mnemonic = KeyEvent.VK_E
         synch.toolTipText = "Synchrones TSP"
-        synch.addActionListener { _e: ActionEvent -> selectFile() }
+        synch.addActionListener { _e: ActionEvent -> this.reader = TSPLibReaderSync()}
 
         val asynch = JMenuItem("Asynchron")
         asynch.mnemonic = KeyEvent.VK_E
         asynch.toolTipText = "Synchrones TSP"
-//        asynch.addActionListener { _e: ActionEvent -> selectFile() }
+        asynch.addActionListener { _e: ActionEvent -> this.reader = TSPLibReaderAsync() }
 
         val nearest = JMenuItem("NearestNeighbor")
         nearest.mnemonic = KeyEvent.VK_E
         nearest.toolTipText = "Synchrones TSP"
-//        nearest.addActionListener { _e: ActionEvent -> selectFile() }
+        nearest.addActionListener { _e: ActionEvent -> this.algorithm = NearestNeighbourAlgorithm() }
 
         val tree = JMenuItem("Tree")
         tree.mnemonic = KeyEvent.VK_E
         tree.toolTipText = "Synchrones TSP"
-//        tree.addActionListener { _e: ActionEvent -> selectFile() }
+        tree.addActionListener { _e: ActionEvent -> this.algorithm = MinimumSpanningTreeAlgorithm() }
 
 
 
