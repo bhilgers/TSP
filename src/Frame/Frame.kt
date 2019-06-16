@@ -128,7 +128,6 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
     }
 
     fun draw(g: Graphics2D){
-
         g.color = Color.red
         result.forEach{
             g.drawLine(it.fromNode.x.toInt()*relativWith.toInt(),it.fromNode.y.toInt()*realtivHigh.toInt(),it.toNode.x.toInt()*relativWith.toInt(),it.toNode.y.toInt()*realtivHigh.toInt())
@@ -140,8 +139,9 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
     }
 
     override fun paint(g: Graphics?) {
-        super.paint(g)
+        canvas.repaint()
         draw(canvas.graphics as Graphics2D)
+        super.paint(g)
     }
 
 }
