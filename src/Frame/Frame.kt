@@ -24,8 +24,8 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
     val canvas = java.awt.Canvas()
     var relativWith: Double = 0.0
     var realtivHigh: Double = 0.0
-    val canvasWith = 500
-    val canvasHigh = 500
+    val canvasWith = 1000
+    val canvasHigh = 900
 
 
 
@@ -128,6 +128,7 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
     }
 
     fun draw(g: Graphics2D){
+
         g.color = Color.red
         result.forEach{
             g.drawLine(it.fromNode.x.toInt()*relativWith.toInt(),it.fromNode.y.toInt()*realtivHigh.toInt(),it.toNode.x.toInt()*relativWith.toInt(),it.toNode.y.toInt()*realtivHigh.toInt())
