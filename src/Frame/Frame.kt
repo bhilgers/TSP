@@ -22,8 +22,10 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
     var dataSet: DataSet? = null
     var result=listOf<Vector>()
     val canvas = java.awt.Canvas()
-    val setWith = 0.0
-    val setHigh = 0.0
+    var relativWith: Double = 0.0
+    var realtivHigh: Double = 0.0
+    val canvasWith = 500
+    val canvasHigh = 500
 
 
 
@@ -39,8 +41,8 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
 
         setSize(1000, 1000)
         setLocationRelativeTo(null)
-        canvas.setSize(500,500)
-
+        canvas.isVisible = true
+        canvas.setSize(canvasWith,canvasHigh)
     }
 
 
@@ -48,20 +50,12 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
 
         val menubar = JMenuBar()
 
-        /**
-         * Dropdowns
-         */
+        //chooser
         val file = JMenu("Art")
         file.mnemonic = KeyEvent.VK_F
 
         val algo = JMenu("Algorithmus")
         file.mnemonic = KeyEvent.VK_F
-
-
-
-        /**
-         * Menue Items
-         */
         val synch = JMenuItem("Synchron")
         synch.mnemonic = KeyEvent.VK_E
         synch.toolTipText = "Synchrones TSP"
@@ -82,26 +76,21 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
         tree.toolTipText = "Synchrones TSP"
         tree.addActionListener { _e: ActionEvent -> this.algorithm = MinimumSpanningTreeAlgorithm() }
 
-
-
+        //buttons
         val start = JButton("Lines")
         start.toolTipText = "Start to Create TSP"
         start.addActionListener{ e :ActionEvent -> calculate()}
 
-
+        //adding
         file.add(synch)
         file.add(asynch)
-
         algo.add(tree)
         algo.add(nearest)
-
         menubar.add(algo)
         menubar.add(file)
         menubar.add(start)
-
         add(canvas)
         jMenuBar = menubar
-        canvas.isVisible = true
 
     }
 
@@ -118,14 +107,11 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
 //        repaint()
         }
 
-        val setHigh =  dataSet!!.nodes.maxBy { it.x }
-        val setWith =  dataSet!!.nodes.maxBy { it.y }
-
-        println(setHigh!!.x)
-        println(setWith!!.y)
-
-
-
+        //get relativs
+        val highstX =  dataSet!!.nodes.maxBy { it.x }!!.x
+        val highstY =  dataSet!!.nodes.maxBy { it.y }!!.y
+        this.realtivHigh = canvasHigh/highstY
+        this.relativWith = canvasWith/highstY
     }
 
     fun calculate(){
@@ -137,17 +123,15 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
             System.out.println("Error: Cant calculate an empty dataSet")
         }
         repaint()
-
-
     }
 
     fun draw(g: Graphics2D){
         g.color = Color.red
         result.forEach{
-            g.drawLine(it.fromNode.x.toInt()*5,it.fromNode.y.toInt()*5,it.toNode.x.toInt()*5,it.toNode.y.toInt()*5)
+            g.drawLine(it.fromNode.x.toInt()*relativWith.toInt(),it.fromNode.y.toInt()*realtivHigh.toInt(),it.toNode.x.toInt()*relativWith.toInt(),it.toNode.y.toInt()*realtivHigh.toInt())
         }
         dataSet?.nodes?.forEach {
-            g.drawOval(it.x.toInt()*5,it.y.toInt()*5,2,2)
+            g.drawOval(it.x.toInt()*relativWith.toInt(),it.y.toInt()*realtivHigh.toInt(),2,2)
         }
         System.out.println("Info: repainted")
     }
