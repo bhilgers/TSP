@@ -7,7 +7,7 @@ fun main(args: Array <String>){
     //Create IReader()
     val reader: IReader = TSPLibReaderSync()
     //Create IAlgorithm()
-    val algo: IAlgorithm = MinimumSpanningTreeAlgorithm()
+    val algo: IAlgorithm = NearestNeighbourAlgorithm()
     //test
     //var testdata = reader.readFile("C:\\Users\\BenHi\\Source\\test.txt")
     //var testresult = algo.Calculate(testdata)

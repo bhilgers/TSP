@@ -21,24 +21,25 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
     val algorithm: IAlgorithm = algorithmParm
     var dataSet: DataSet? = null
     var result=listOf<Vector>()
-
     val canvas = java.awt.Canvas()
+    val setWith = 0.0
+    val setHigh = 0.0
+
+
 
     init {
         createUI(title)
     }
 
     private fun createUI(title: String){
+        defaultCloseOperation = EXIT_ON_CLOSE
 
         setTitle(title)
-
         createMenuBar()
-        defaultCloseOperation = EXIT_ON_CLOSE
+
         setSize(1000, 1000)
-
         setLocationRelativeTo(null)
-
-        canvas.setSize(500, 500)
+        canvas.setSize(500,500)
 
     }
 
@@ -47,32 +48,55 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
 
         val menubar = JMenuBar()
 
-        val file = JMenu("Menu")
+        /**
+         * Dropdowns
+         */
+        val file = JMenu("Art")
         file.mnemonic = KeyEvent.VK_F
+
+        val algo = JMenu("Algorithmus")
+        file.mnemonic = KeyEvent.VK_F
+
 
 
         /**
          * Menue Items
          */
-        val exit = JMenuItem("Exit")
-        exit.mnemonic = KeyEvent.VK_E
-        exit.toolTipText = "Exit application"
-        exit.addActionListener { _: ActionEvent -> System.exit(0) }
+        val synch = JMenuItem("Synchron")
+        synch.mnemonic = KeyEvent.VK_E
+        synch.toolTipText = "Synchrones TSP"
+        synch.addActionListener { _e: ActionEvent -> selectFile() }
+
+        val asynch = JMenuItem("Asynchron")
+        asynch.mnemonic = KeyEvent.VK_E
+        asynch.toolTipText = "Synchrones TSP"
+//        asynch.addActionListener { _e: ActionEvent -> selectFile() }
+
+        val nearest = JMenuItem("NearestNeighbor")
+        nearest.mnemonic = KeyEvent.VK_E
+        nearest.toolTipText = "Synchrones TSP"
+//        nearest.addActionListener { _e: ActionEvent -> selectFile() }
+
+        val tree = JMenuItem("Tree")
+        tree.mnemonic = KeyEvent.VK_E
+        tree.toolTipText = "Synchrones TSP"
+//        tree.addActionListener { _e: ActionEvent -> selectFile() }
 
 
-        val choose = JButton("Choose")
-        choose.toolTipText = "Upload TXT"
-        choose.addActionListener{ e :ActionEvent -> selectfile()}
-        pack()
 
-        val start = JButton("Create")
+        val start = JButton("Lines")
         start.toolTipText = "Start to Create TSP"
         start.addActionListener{ e :ActionEvent -> calculate()}
 
 
-        file.add(exit)
+        file.add(synch)
+        file.add(asynch)
+
+        algo.add(tree)
+        algo.add(nearest)
+
+        menubar.add(algo)
         menubar.add(file)
-        menubar.add(choose)
         menubar.add(start)
 
         add(canvas)
@@ -81,7 +105,8 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
 
     }
 
-    fun selectfile() {
+    fun selectFile() {
+
         val chooser = JFileChooser()
         chooser.dialogTitle = "Wählen Sie aus"
         chooser.isAcceptAllFileFilterUsed
@@ -90,8 +115,17 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
             println(chooser.selectedFile.path)
             this.dataSet = reader.readFile(chooser.selectedFile.path)
             System.out.println("Info: finished reading")
+//        repaint()
         }
-        repaint()
+
+        val setHigh =  dataSet!!.nodes.maxBy { it.x }
+        val setWith =  dataSet!!.nodes.maxBy { it.y }
+
+        println(setHigh!!.x)
+        println(setWith!!.y)
+
+
+
     }
 
     fun calculate(){
@@ -103,6 +137,8 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
             System.out.println("Error: Cant calculate an empty dataSet")
         }
         repaint()
+
+
     }
 
     fun draw(g: Graphics2D){
