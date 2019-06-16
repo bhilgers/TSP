@@ -106,14 +106,15 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
             println(chooser.selectedFile.path)
             this.dataSet = reader.readFile(chooser.selectedFile.path)
             System.out.println("Info: finished reading")
-//        repaint()
-        }
 
-        //get relativs
-        val highstX =  dataSet!!.nodes.maxBy { it.x }!!.x
-        val highstY =  dataSet!!.nodes.maxBy { it.y }!!.y
-        this.realtivHigh = canvasHigh/highstY
-        this.relativWith = canvasWith/highstX
+            //get relativs
+            val highstX =  dataSet!!.nodes.maxBy { it.x }!!.x
+            val highstY =  dataSet!!.nodes.maxBy { it.y }!!.y
+            this.realtivHigh = canvasHigh/highstY
+            this.relativWith = canvasWith/highstX
+
+            repaint()
+        }
     }
 
     fun calculate(){
@@ -132,16 +133,20 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
         result.forEach{
             g.drawLine(it.fromNode.x.toInt()*relativWith.toInt(),it.fromNode.y.toInt()*realtivHigh.toInt(),it.toNode.x.toInt()*relativWith.toInt(),it.toNode.y.toInt()*realtivHigh.toInt())
         }
+        g.color = Color.blue
         dataSet?.nodes?.forEach {
-            g.drawOval(it.x.toInt()*relativWith.toInt(),it.y.toInt()*realtivHigh.toInt(),2,2)
+            g.drawOval(it.x.toInt()*relativWith.toInt()-1,it.y.toInt()*realtivHigh.toInt()-1,2,2)
         }
-        System.out.println("Info: repainted")
+        //print start point
+        if(dataSet != null) {
+            g.color = Color.GREEN
+            g.drawOval(dataSet!!.nodes[0].x.toInt() * relativWith.toInt()-5, dataSet!!.nodes[0].y.toInt() * realtivHigh.toInt()-5, 10, 10)
+        }
     }
 
     override fun paint(g: Graphics?) {
-        canvas.repaint()
-        draw(canvas.graphics as Graphics2D)
         super.paint(g)
+        draw(canvas.graphics as Graphics2D)
     }
 
 }

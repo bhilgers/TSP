@@ -75,6 +75,7 @@ class MinimumSpanningTreeAlgorithm : IAlgorithm {
         }while(nodeToConnect.marked && !nodeToConnect.connectedNodes.isEmpty())
 
         node.marked = true
+
         newVectors += Vector(node.node,nodeToConnect.node)
 
         return findTSPTour(nodeToConnect, newVectors)
