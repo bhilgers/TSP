@@ -41,6 +41,8 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
 
         setSize(1000, 1000)
         setLocationRelativeTo(null)
+        //add canvas
+        add(canvas)
         canvas.isVisible = true
         canvas.setSize(canvasWith,canvasHigh)
     }
@@ -51,32 +53,30 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
         val menubar = JMenuBar()
 
         //chooser
-        val file = JMenu("Art")
-        file.mnemonic = KeyEvent.VK_F
-
-        val algo = JMenu("Algorithmus")
+        val file = JMenu("Reader")
         file.mnemonic = KeyEvent.VK_F
         val synch = JMenuItem("Synchron")
         synch.mnemonic = KeyEvent.VK_E
         synch.toolTipText = "Synchrones TSP"
         synch.addActionListener { _e: ActionEvent -> this.reader = TSPLibReaderSync()}
-
         val asynch = JMenuItem("Asynchron")
         asynch.mnemonic = KeyEvent.VK_E
         asynch.toolTipText = "Synchrones TSP"
         asynch.addActionListener { _e: ActionEvent -> this.reader = TSPLibReaderAsync() }
 
+        val algo = JMenu("Algorithm")
+        file.mnemonic = KeyEvent.VK_F
         val nearest = JMenuItem("NearestNeighbor")
         nearest.mnemonic = KeyEvent.VK_E
         nearest.toolTipText = "Synchrones TSP"
         nearest.addActionListener { _e: ActionEvent -> this.algorithm = NearestNeighbourAlgorithm() }
-
-        val tree = JMenuItem("Tree")
+        val tree = JMenuItem("MinimunSpanningTree")
         tree.mnemonic = KeyEvent.VK_E
         tree.toolTipText = "Synchrones TSP"
         tree.addActionListener { _e: ActionEvent -> this.algorithm = MinimumSpanningTreeAlgorithm() }
 
-        val chose = JButton("Chose")
+        //buttons
+        val chose = JButton("File")
         chose.toolTipText = "Wähle die Datei"
         chose.addActionListener{ e :ActionEvent -> selectFile()}
 
@@ -93,9 +93,7 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
         menubar.add(file)
         menubar.add(chose)
         menubar.add(start)
-        add(canvas)
         jMenuBar = menubar
-
     }
 
     fun selectFile() {
