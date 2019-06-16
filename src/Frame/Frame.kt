@@ -20,7 +20,7 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
     var reader: IReader = readerParm
     var algorithm: IAlgorithm = algorithmParm
     var dataSet: DataSet? = null
-    var result=listOf<Vector>()
+    var result = listOf<Vector>()
     val canvas = java.awt.Canvas()
     var relativWith: Double = 0.0
     var realtivHigh: Double = 0.0
@@ -76,8 +76,11 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
         tree.toolTipText = "Synchrones TSP"
         tree.addActionListener { _e: ActionEvent -> this.algorithm = MinimumSpanningTreeAlgorithm() }
 
-        //buttons
-        val start = JButton("Lines")
+        val chose = JButton("Chose")
+        chose.toolTipText = "Wähle die Datei"
+        chose.addActionListener{ e :ActionEvent -> selectFile()}
+
+        val start = JButton("Claculate")
         start.toolTipText = "Start to Create TSP"
         start.addActionListener{ e :ActionEvent -> calculate()}
 
@@ -88,6 +91,7 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
         algo.add(nearest)
         menubar.add(algo)
         menubar.add(file)
+        menubar.add(chose)
         menubar.add(start)
         add(canvas)
         jMenuBar = menubar
@@ -111,7 +115,7 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
         val highstX =  dataSet!!.nodes.maxBy { it.x }!!.x
         val highstY =  dataSet!!.nodes.maxBy { it.y }!!.y
         this.realtivHigh = canvasHigh/highstY
-        this.relativWith = canvasWith/highstY
+        this.relativWith = canvasWith/highstX
     }
 
     fun calculate(){
