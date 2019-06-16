@@ -84,6 +84,11 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
         start.toolTipText = "Start to Create TSP"
         start.addActionListener{ e :ActionEvent -> calculate()}
 
+        val clear = JButton("Clear")
+        clear.toolTipText = "Start to Create TSP"
+        clear.addActionListener{ e :ActionEvent -> clear()}
+
+
         //adding
         file.add(synch)
         file.add(asynch)
@@ -93,6 +98,7 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
         menubar.add(file)
         menubar.add(chose)
         menubar.add(start)
+        menubar.add(clear)
         jMenuBar = menubar
     }
 
@@ -143,7 +149,9 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
             g.drawOval(dataSet!!.nodes[0].x.toInt() * relativWith.toInt()-5, dataSet!!.nodes[0].y.toInt() * realtivHigh.toInt()-5, 10, 10)
         }
     }
-
+    fun clear(){
+        canvas.graphics.clearRect(0,0, canvas.width, canvas.height);
+    }
     override fun paint(g: Graphics?) {
         super.paint(g)
         draw(canvas.graphics as Graphics2D)
