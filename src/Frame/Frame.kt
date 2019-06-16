@@ -20,7 +20,7 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
     var reader: IReader = readerParm
     var algorithm: IAlgorithm = algorithmParm
     var dataSet: DataSet? = null
-    var result=listOf<Vector>()
+    var result = listOf<Vector>()
     val canvas = java.awt.Canvas()
     val setWith = 0.0
     val setHigh = 0.0
@@ -82,12 +82,13 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
         tree.toolTipText = "Synchrones TSP"
         tree.addActionListener { _e: ActionEvent -> this.algorithm = MinimumSpanningTreeAlgorithm() }
 
+        val chose = JButton("Chose")
+        chose.toolTipText = "Wähle die Datei"
+        chose.addActionListener{ e :ActionEvent -> selectFile()}
 
-
-        val start = JButton("Lines")
+        val start = JButton("Claculate")
         start.toolTipText = "Start to Create TSP"
         start.addActionListener{ e :ActionEvent -> calculate()}
-
 
         file.add(synch)
         file.add(asynch)
@@ -97,6 +98,7 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
 
         menubar.add(algo)
         menubar.add(file)
+        menubar.add(chose)
         menubar.add(start)
 
         add(canvas)
@@ -123,8 +125,6 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
 
         println(setHigh!!.x)
         println(setWith!!.y)
-
-
 
     }
 
