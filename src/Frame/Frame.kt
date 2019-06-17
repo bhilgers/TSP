@@ -24,7 +24,7 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
     var relativWith: Double = 0.0
     var realtivHigh: Double = 0.0
     val canvasWith = 1000
-    val canvasHigh = 900
+    val canvasHigh = 800
     var isAsym = false
 
 
@@ -142,7 +142,8 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
                 this.result = listOf()
                 repaint()
             } catch (e : Exception) {
-                System.out.println("Error: Can't read File! Check you use the right reader")
+                System.out.println(e.toString())
+                //System.out.println("Error: Can't read File! Check you use the right reader")
             }
         }
     }
@@ -177,17 +178,17 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
             if(it.fromNode.number == 107 || it.toNode.number == 107) {
                 g.color = Color.BLACK
             }*/
-            g.drawLine(it.fromNode.x.toInt()*relativWith.toInt(),it.fromNode.y.toInt()*realtivHigh.toInt(),it.toNode.x.toInt()*relativWith.toInt(),it.toNode.y.toInt()*realtivHigh.toInt())
+            g.drawLine((it.fromNode.x.toInt()*relativWith).toInt(),(it.fromNode.y.toInt()*realtivHigh).toInt(),(it.toNode.x.toInt()*relativWith).toInt(),(it.toNode.y.toInt()*realtivHigh).toInt())
             //g.color = Color.red
         }
         g.color = Color.blue
         dataSet?.nodes?.forEach {
-            g.drawOval(it.x.toInt()*relativWith.toInt()-1,it.y.toInt()*realtivHigh.toInt()-1,2,2)
+            g.drawOval(((it.x.toInt()*relativWith).toInt())-1,((it.y.toInt()*realtivHigh).toInt())-1,2,2)
         }
         //print start point
         if(dataSet != null) {
             g.color = Color.GREEN
-            g.drawOval(dataSet!!.nodes[0].x.toInt() * relativWith.toInt()-5, dataSet!!.nodes[0].y.toInt() * realtivHigh.toInt()-5, 10, 10)
+            g.drawOval((dataSet!!.nodes[0].x * relativWith).toInt()-5, (dataSet!!.nodes[0].y * realtivHigh).toInt()-5, 10, 10)
         }
     }
     fun drawText(g: Graphics2D) {

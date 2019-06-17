@@ -9,7 +9,7 @@ fun main(args: Array <String>){
     //Create IAlgorithm()
     val algo: IAlgorithm = NearestNeighbourAlgorithm()
 
-    val frame = Frame("Simple", reader, algo)
+    val frame = Frame("Travelling Salesman Problem ", reader, algo)
     frame.isVisible = true
 
 }
