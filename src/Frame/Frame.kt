@@ -23,7 +23,7 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
     val canvas = java.awt.Canvas()
     var relativWith: Double = 0.0
     var realtivHigh: Double = 0.0
-    val canvasWith = 1000
+    val canvasWith = 800
     val canvasHigh = 800
     var isAsym = false
 
@@ -55,9 +55,9 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
         //chooser
         val file = JMenu("Reader")
         file.mnemonic = KeyEvent.VK_F
-        val synch = JMenuItem("Synchron")
+        val synch = JMenuItem("Symmetrisch")
         synch.mnemonic = KeyEvent.VK_E
-        synch.toolTipText = "Synchrones TSP"
+        synch.toolTipText = "Symmetrisches TSP"
         synch.addActionListener { _e: ActionEvent -> run {
             this.reader = TSPLibReaderSym()
             this.isAsym = false
@@ -66,9 +66,9 @@ class Frame (title: String, readerParm: IReader, algorithmParm: IAlgorithm ): JF
             this.dataSet = null
             repaint()
         }}
-        val asynch = JMenuItem("Asymetrich")
+        val asynch = JMenuItem("Asymmetrisch")
         asynch.mnemonic = KeyEvent.VK_E
-        asynch.toolTipText = "Symetrich TSP"
+        asynch.toolTipText = "Asymetrich TSP"
         asynch.addActionListener { _e: ActionEvent -> run {
             this.reader = TSPLibReaderAsym()
             this.isAsym = true
